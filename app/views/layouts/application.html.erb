@@ -46,24 +46,26 @@
 
 <body>
 
-<%= render 'layouts/header' %>
-<%= render 'layouts/sidebar' %>
+<% if user_signed_in? %>
+  <%= render 'layouts/header' %>
+  <%= render 'layouts/sidebar' %>
 
-<main class="main-wrapper">
-  <div class="main-content">
-    <%= render 'layouts/breadcrumb' %>
-    <%= yield %>
-  </div>
-</main>
+  <main class="main-wrapper">
+    <div class="main-content">
+      <%= render 'layouts/breadcrumb' %>
+      <%= yield %>
+    </div>
+  </main>
 
-<div class="overlay btn-toggle"></div>
+  <%= render 'layouts/footer' %>
+  <%= render 'layouts/cart' %>
 
-<%= render 'layouts/footer' %>
-<%= render 'layouts/cart' %>
+  <%= render 'layouts/theme_customizer' %>
+<% else %>
+  <%= yield %>
+<% end %>
 
-<!--start switcher-->
-<%= render 'layouts/theme_customizer' %>
-<!--start switcher-->
+
 
 </body>
 </html>

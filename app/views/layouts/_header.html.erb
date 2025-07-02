@@ -477,8 +477,9 @@
           <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:;"><i
             class="material-icons-outlined">cloud_download</i>Downloads</a>
           <hr class="dropdown-divider">
-          <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:;"><i
-            class="material-icons-outlined">power_settings_new</i>Logout</a>
+          <%= button_to destroy_user_session_path, method: :delete, form: { class: "d-inline" }, class: "dropdown-item d-flex align-items-center gap-2 py-2 bg-transparent border-0", data: { turbo: false } do %>
+            <i class="material-icons-outlined">power_settings_new</i>Logout
+          <% end %>
         </div>
       </li>
     </ul>
