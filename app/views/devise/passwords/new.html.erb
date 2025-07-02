@@ -1,0 +1,33 @@
+<div class="auth-basic-wrapper d-flex align-items-center justify-content-center">
+  <div class="container my-5 my-lg-0">
+    <div class="row">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5 col-xxl-4 mx-auto">
+        <div class="card rounded-4 mb-0 border-top border-4 border-primary border-gradient-1">
+          <div class="card-body p-5">
+            <img src="<%= asset_path 'logo1.png' %>" class="mb-4" width="145" alt="">
+            <h4 class="fw-bold">Forgot Password?</h4>
+            <p class="mb-0">Enter your registered email ID to reset the password</p>
+
+            <div class="form-body mt-4">
+              <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: "row g-4" }) do |f| %>
+                <%= render "devise/shared/error_messages", resource: resource %>
+                <div class="col-12">
+                  <%= f.label :email, "Email id", class: "form-label" %>
+                  <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-control-lg", placeholder: "example@user.com" %>
+                </div>
+                <div class="col-12">
+                  <div class="d-grid gap-2">
+                    <%= f.submit "Send", class: "btn btn-grd-primary" %>
+                    <%= link_to "Back to Login", new_session_path(resource_name), class: "btn btn-light" %>
+                  </div>
+                </div>
+              <% end %>
+              <%= render "devise/shared/links" %>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

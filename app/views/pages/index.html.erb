@@ -1,0 +1,5 @@
+<% if user_signed_in? %>
+  <h1>Welcome Home, <%= current_user.email %></h1>
+<% else %>
+  <h1>NAO TA LOGADO MANOOOW</h1>
+<% end %>
