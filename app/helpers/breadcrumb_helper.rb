@@ -1,7 +1,7 @@
 module BreadcrumbHelper
 
   PAGE_TITLES = {
-    'user_profile#show' => { title: 'Meu Perfil', subtitle: 'Atualizar Dados' },
+    'profile#show' => { title: 'Meu Perfil', subtitle: 'Atualizar Dados' },
     'wallet#index' => { title: 'Dashboard', subtitle: 'Your Balance' },
     'pages#index' => { title: 'Dashboard', subtitle: 'Welcome' },
     }.freeze
