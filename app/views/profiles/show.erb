@@ -1,119 +1,118 @@
 <div class="card rounded-4">
-            <div class="card-body p-4">
-              <div class="position-relative mb-5">
-                <img src="assets/images/gallery/profile-cover.png" class="img-fluid rounded-4 shadow" alt="">
-                <div class="profile-avatar position-absolute top-100 start-50 translate-middle">
-                  <img src="assets/images/avatars/01.png" class="img-fluid rounded-circle p-1 bg-grd-danger shadow" width="170" height="170" alt="">
-                </div>
-              </div>
-              <div class="profile-info pt-5 d-flex align-items-center justify-content-between">
-                <div class="">
-                  <h3><%= @user.name %> <%= @user.surname %></h3>
-                  <p class="mb-0">
-                    <!-- You can customize this with more user info if needed -->
-                    <%= @user.city %>, <%= @user.state %>
-                  </p>
-                </div>
-                <div class="">
-                  <a href="javascript:;" class="btn btn-grd-primary rounded-5 px-4"><i class="bi bi-chat me-2"></i>Send Message</a>
-                </div>
-              </div>
-              <div class="kewords d-flex align-items-center gap-3 mt-4 overflow-x-auto">
-                <button type="button" class="btn btn-sm btn-light rounded-5 px-4">UX Research</button>
-                <button type="button" class="btn btn-sm btn-light rounded-5 px-4">CX Strategy</button>
-                <button type="button" class="btn btn-sm btn-light rounded-5 px-4">Management</button>
-              </div>
+  <div class="card-body p-4">
+    <div class="position-relative mb-5">
+      <img src="assets/images/gallery/profile-cover.png" class="img-fluid rounded-4 shadow" alt="">
+      <div class="profile-avatar position-absolute top-100 start-50 translate-middle">
+        <% if @user.photo.attached? %>
+          <%= image_tag url_for(@user.photo), class: "img-fluid rounded-circle p-1 bg-grd-danger shadow", width: 170, height: 170, alt: "" %>
+        <% else %>
+          <%= image_tag "assets/images/avatars/01.png", class: "profile-avatar", alt: "" %>
+        <% end %>
+      </div>
+    </div>
+    <div class="profile-info pt-5 d-flex align-items-center justify-content-between">
+      <div>
+        <h3><%= @user.name %> <%= @user.surname %></h3>
+        <p class="mb-0">
+          <%= @user.city %>, <%= @user.state %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 col-xl-8">
+    <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
+      <div class="card-body p-4">
+        <div class="d-flex align-items-start justify-content-between mb-3">
+          <div class="">
+            <h5 class="mb-0 fw-bold">Edit Profile</h5>
+          </div>
+        </div>
+        <%= form_with model: @user, url: profile_path, method: :patch, local: true, class: "row g-4" do |f| %>
+          <div class="col-md-6">
+            <%= f.label :name, "Nome", class: "form-label" %>
+            <%= f.text_field :name, class: "form-control", placeholder: "First Name" %>
+          </div>
+          <div class="col-md-6">
+            <%= f.label :surname, "Sobrenome", class: "form-label" %>
+            <%= f.text_field :surname, class: "form-control", placeholder: "Last Name" %>
+          </div>
+          <div class="col-md-12">
+            <%= f.label :phone, "Telefone", class: "form-label" %>
+            <%= f.text_field :phone, class: "form-control", placeholder: "Phone" %>
+          </div>
+          <div class="col-md-12">
+            <%= f.label :date_of_birth, "Data de Nascimento", class: "form-label" %>
+            <%= f.date_field :date_of_birth, class: "form-control" %>
+          </div>
+          <div class="col-md-12">
+            <%= f.label :country, "País", class: "form-label" %>
+            <%= f.text_field :country, class: "form-control", placeholder: "Country" %>
+          </div>
+          <div class="col-md-6">
+            <%= f.label :city, "Cidade", class: "form-label" %>
+            <%= f.text_field :city, class: "form-control", placeholder: "City" %>
+          </div>
+          <div class="col-md-4">
+            <%= f.label :state, "Estado", class: "form-label" %>
+            <%= f.text_field :state, class: "form-control", placeholder: "State" %>
+          </div>
+          <div class="col-md-2">
+            <%= f.label :zipcode, "Cep", class: "form-label" %>
+            <%= f.text_field :zipcode, class: "form-control", placeholder: "Zip" %>
+          </div>
+          <div class="col-md-12">
+            <%= f.label :address, "Address", class: "form-label" %>
+            <%= f.text_area :address, class: "form-control", placeholder: "Address ...", rows: 4, cols: 4 %>
+          </div>
+          <div class="col-md-12">
+            <%= f.label :photo, "Profile Photo", class: "form-label" %>
+            <%= f.file_field :photo, class: "form-control" %>
+          </div>
+          <div class="col-md-12">
+            <div class="d-md-flex d-grid align-items-center gap-3">
+              <%= f.submit "Update Profile", class: "btn btn-grd-primary px-4" %>
+              <%= button_tag "Reset", type: "reset", class: "btn btn-light px-4" %>
             </div>
           </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 
-          <div class="row">
-            <div class="col-12 col-xl-8">
-              <div class="card rounded-4 border-top border-4 border-primary border-gradient-1">
-                <div class="card-body p-4">
-                  <div class="d-flex align-items-start justify-content-between mb-3">
-                    <div class="">
-                      <h5 class="mb-0 fw-bold">Edit Profile</h5>
-                    </div>
-                    <div class="dropdown">
-                      <a href="javascript:;" class="dropdown-toggle-nocaret options dropdown-toggle"
-                         data-bs-toggle="dropdown">
-                        <span class="material-icons-outlined fs-5">more_vert</span>
-                      </a>
-                      <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="javascript:;">Action</a></li>
-                        <li><a class="dropdown-item" href="javascript:;">Another action</a></li>
-                        <li><a class="dropdown-item" href="javascript:;">Something else here</a></li>
-                      </ul>
-                    </div>
-                  </div>
-                  <%= form_with model: @user, url: profile_path, method: :patch, local: true, class: "row g-4" do |f| %>
-                    <div class="col-md-6">
-                      <%= f.label :name, "Nome", class: "form-label" %>
-                      <%= f.text_field :name, class: "form-control", placeholder: "First Name" %>
-                    </div>
-                    <div class="col-md-6">
-                      <%= f.label :surname, "Sobrenome", class: "form-label" %>
-                      <%= f.text_field :surname, class: "form-control", placeholder: "Last Name" %>
-                    </div>
-                    <div class="col-md-12">
-                      <%= f.label :phone, "Telefone", class: "form-label" %>
-                      <%= f.text_field :phone, class: "form-control", placeholder: "Phone" %>
-                    </div>
-                    <div class="col-md-12">
-                      <%= f.label :date_of_birth, "Data de Nascimento", class: "form-label" %>
-                      <%= f.date_field :date_of_birth, class: "form-control" %>
-                    </div>
-                    <div class="col-md-12">
-                      <%= f.label :country, "País", class: "form-label" %>
-                      <%= f.text_field :country, class: "form-control", placeholder: "Country" %>
-                    </div>
-                    <div class="col-md-6">
-                      <%= f.label :city, "Cidade", class: "form-label" %>
-                      <%= f.text_field :city, class: "form-control", placeholder: "City" %>
-                    </div>
-                    <div class="col-md-4">
-                      <%= f.label :state, "Estado", class: "form-label" %>
-                      <%= f.text_field :state, class: "form-control", placeholder: "State" %>
-                    </div>
-                    <div class="col-md-2">
-                      <%= f.label :zipcode, "Cep", class: "form-label" %>
-                      <%= f.text_field :zipcode, class: "form-control", placeholder: "Zip" %>
-                    </div>
-                    <div class="col-md-12">
-                      <%= f.label :address, "Address", class: "form-label" %>
-                      <%= f.text_area :address, class: "form-control", placeholder: "Address ...", rows: 4, cols: 4 %>
-                    </div>
-                    <div class="col-md-12">
-                      <div class="d-md-flex d-grid align-items-center gap-3">
-                        <%= f.submit "Update Profile", class: "btn btn-grd-primary px-4" %>
-                        <%= button_tag "Reset", type: "reset", class: "btn btn-light px-4" %>
-                      </div>
-                    </div>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-12 col-xl-4">
-              <div class="card rounded-4">
-                <div class="card-body">
-                  <div class="d-flex align-items-start justify-content-between mb-3">
-                    <div class="">
-                      <h5 class="mb-0 fw-bold">Sobre</h5>
-                    </div>
-                  </div>
-                  <div class="full-info">
-                    <div class="info-list d-flex flex-column gap-3">
-                      <div class="info-list-item d-flex align-items-center gap-3"><span class="material-icons-outlined">account_circle</span><p class="mb-0">Full Name: <%= @user.name %> <%= @user.surname %></p></div>
-                      <div class="info-list-item d-flex align-items-center gap-3"><span class="material-icons-outlined">done</span><p class="mb-0">Status: active</p></div>
-                      <div class="info-list-item d-flex align-items-center gap-3"><span class="material-icons-outlined">code</span><p class="mb-0">Role: Developer</p></div>
-<!--                      <div class="info-list-item d-flex align-items-center gap-3"><span class="material-icons-outlined">flag</span><p class="mb-0">Country: <%#= @user.country %></p></div>-->
-                      <div class="info-list-item d-flex align-items-center gap-3"><span class="material-icons-outlined">language</span><p class="mb-0">Language: English</p></div>
-                      <div class="info-list-item d-flex align-items-center gap-3"><span class="material-icons-outlined">send</span><p class="mb-0">Email: <%= @user.email %></p></div>
-                      <div class="info-list-item d-flex align-items-center gap-3"><span class="material-icons-outlined">call</span><p class="mb-0">Phone: <%= @user.phone %></p></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+  <div class="col-12 col-xl-4">
+    <div class="card rounded-4">
+      <div class="card-body">
+        <div class="d-flex align-items-start justify-content-between mb-3">
+          <div class="">
+            <h5 class="mb-0 fw-bold">Sobre</h5>
           </div>
+        </div>
+        <div class="full-info">
+          <div class="info-list d-flex flex-column gap-3">
+            <div class="info-list-item d-flex align-items-center gap-3">
+              <span class="material-icons-outlined">account_circle</span>
+              <p class="mb-0">Full Name: <%= @user.name %> <%= @user.surname %></p></div>
+            <div class="info-list-item d-flex align-items-center gap-3">
+              <span class="material-icons-outlined">done</span>
+              <p class="mb-0">Status: active</p></div>
+            <div class="info-list-item d-flex align-items-center gap-3">
+              <span class="material-icons-outlined">code</span>
+              <p class="mb-0">Role: Developer</p></div>
+            <!--                      <div class="info-list-item d-flex align-items-center gap-3"><span class="material-icons-outlined">flag</span><p class="mb-0">Country: <%#= @user.country %></p></div>-->
+            <div class="info-list-item d-flex align-items-center gap-3">
+              <span class="material-icons-outlined">language</span>
+              <p class="mb-0">Language: English</p></div>
+            <div class="info-list-item d-flex align-items-center gap-3">
+              <span class="material-icons-outlined">send</span>
+              <p class="mb-0">Email: <%= @user.email %></p></div>
+            <div class="info-list-item d-flex align-items-center gap-3">
+              <span class="material-icons-outlined">call</span>
+              <p class="mb-0">Phone: <%= @user.phone %></p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
