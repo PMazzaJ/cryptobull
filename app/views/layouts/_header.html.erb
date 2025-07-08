@@ -466,8 +466,9 @@
             </div>
           </a>
           <hr class="dropdown-divider">
-          <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:;"><i
-            class="material-icons-outlined">person_outline</i>Profile</a>
+          <%= link_to profile_path, class: "dropdown-item d-flex align-items-center gap-2 py-2" do %>
+            <i class="material-icons-outlined">person_outline</i>Profile
+          <% end %>
           <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:;"><i
             class="material-icons-outlined">local_bar</i>Setting</a>
           <a class="dropdown-item d-flex align-items-center gap-2 py-2" href="javascript:;"><i
