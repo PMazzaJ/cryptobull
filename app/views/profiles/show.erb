@@ -60,7 +60,12 @@
           </div>
           <div class="col-md-2">
             <%= f.label :zipcode, "Cep", class: "form-label" %>
-            <%= f.text_field :zipcode, class: "form-control", placeholder: "Zip" %>
+            <div class="input-group">
+              <%= f.text_field :zipcode, class: "form-control", placeholder: "Zip", id: "zipcode_field" %>
+              <button type="button" class="btn btn-outline-secondary" onclick="lookupCep()" title="Buscar CEP">
+                <span class="material-icons-outlined">search</span>
+              </button>
+            </div>
           </div>
           <div class="col-md-12">
             <%= f.label :address, "Address", class: "form-label" %>
@@ -116,3 +121,61 @@
     </div>
   </div>
 </div>
+
+<script>
+function lookupCep() {
+  const zipcode = document.getElementById('zipcode_field').value;
+  
+  if (!zipcode || zipcode.length !== 8 || !/^\d+$/.test(zipcode)) {
+    alert('Por favor, digite um CEP válido de 8 dígitos');
+    return;
+  }
+  
+  // Show loading state
+  const button = event.target;
+  const originalContent = button.innerHTML;
+  button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span>';
+  button.disabled = true;
+  
+  fetch(`/cep/${zipcode}`)
+    .then(response => response.json())
+    .then(data => {
+      if (data.error) {
+        alert(`Erro: ${data.error}`);
+        return;
+      }
+      
+      // Show results in a modal or alert
+      let message = `Resultados para CEP ${zipcode}:\n\n`;
+      data.services.forEach(service => {
+        message += `${service.service_name}:\n`;
+        if (service.response.error) {
+          message += `  Erro: ${service.response.error}\n`;
+        } else {
+          // Try to extract address info from different service formats
+          if (service.service_name === 'ViaCEP') {
+            message += `  ${service.response.logradouro}\n`;
+            message += `  ${service.response.bairro}, ${service.response.localidade} - ${service.response.uf}\n`;
+          } else if (service.service_name === 'APICEP') {
+            message += `  ${service.response.address}\n`;
+            message += `  ${service.response.district}, ${service.response.city} - ${service.response.state}\n`;
+          } else if (service.service_name === 'Postmon') {
+            message += `  ${service.response.logradouro}\n`;
+            message += `  ${service.response.bairro}, ${service.response.cidade} - ${service.response.estado}\n`;
+          }
+        }
+        message += '\n';
+      });
+      
+      alert(message);
+    })
+    .catch(error => {
+      alert(`Erro na consulta: ${error.message}`);
+    })
+    .finally(() => {
+      // Restore button state
+      button.innerHTML = originalContent;
+      button.disabled = false;
+    });
+}
+</script>
